@@ -1,0 +1,38 @@
+1) yarn init --yes
+2) yarn add express
+3) index1.js // create
+4) node index1.js
+
+5) yarn add nodemon --dev
+6) yarn nodemon index1.js
+7) yarn nodemon --inspect index1.js
+
+8) yarn add typescript ts-node @types/node @types/express --dev
+9) yarn tsc --init
+10) tsconfig.json:
+    "rootDir": "./src",
+    "outDir": "./dist",
+11) index2.ts // create
+12) yarn tsc -w
+13) yarn nodemon dist/index2.js
+
+14) "scripts": {
+       "watch": "tsc -w",
+       "dev": "nodemon dist/index2.js"
+     }, // yann watch, yarn dev
+15) import express, {Response, Request} from 'express'
+16) (req: Request, res: Response) => {
+
+17) yarn add cors
+18) yarn add @types/cors --dev
+19) import cors from 'cors'
+20) app.use(cors())
+
+21) yarn add body-parser
+22) import bodyParser from 'body-parser'
+23)
+    // parse application/x-www-form-urlencoded
+    app.use(bodyParser.urlencoded({ extended: false }))
+    // parse application/json
+    app.use(bodyParser.json())
+
