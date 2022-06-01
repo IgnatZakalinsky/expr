@@ -4,7 +4,7 @@ import {addVideo, changeVideo, delVideo, getVideo, getVideos} from './video/vide
 import bodyParser from 'body-parser'
 
 const app = express()
-const port = 5000
+const port = process.env.PORT || 5000
 
 app.use(cors())
 // parse application/x-www-form-urlencoded

@@ -4,6 +4,8 @@
   "main": "src/index1.js",
   "license": "MIT",
   "scripts": {
+    "build": "tsc",
+    "start": "node dist/index2.js",
     "watch": "tsc -w",
     "dev": "nodemon dist/index2.js"
   },

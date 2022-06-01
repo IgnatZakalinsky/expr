@@ -36,3 +36,7 @@
     // parse application/json
     app.use(bodyParser.json())
 
+24)  "scripts": {
+        "build": "tsc",
+        "start": "node dist/index2.js",
+25) const port = process.env.PORT || 5000
