@@ -6,7 +6,7 @@ export let videos = [
 ]
 
 export const getVideos = (req: Request, res: Response) => {
-    res.status(200).json({videos})
+    res.status(200).json(videos)
 }
 export const addVideo = (req: Request, res: Response) => {
     const newVideo = {
@@ -15,16 +15,16 @@ export const addVideo = (req: Request, res: Response) => {
         author: 'it-incubator.eu'
     }
     videos.push(newVideo)
-    res.status(201).json({video: newVideo})
+    res.status(201).json(newVideo)
 }
 export const getVideo = (req: Request, res: Response) => {
-    res.status(200).json({video: videos.find(v => v.id === +req.params.id)})
+    res.status(200).json(videos.find(v => v.id === +req.params.id))
 }
 export const delVideo = (req: Request, res: Response) => {
     videos = videos.filter(v => v.id !== +req.params.id)
-    res.status(200).json({})
+    res.status(204).json({})
 }
 export const changeVideo = (req: Request, res: Response) => {
     videos = videos.map(v => v.id === +req.params.id ? {...v, title: req.body.title} : v)
-    res.status(200).json({})
+    res.status(204).json({})
 }
