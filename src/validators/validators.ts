@@ -24,4 +24,17 @@ export const checkLength = (
         return true
     }
 }
+export const checkLink = (
+    value: string,
+    field: string,
+    errors: {message: string, field: string}[]
+) => {
+    if ((value.indexOf?.('.') || -2) < 0) {
+        errors.push({message: field + ' not link', field})
+        return false
+    } else {
+        return true
+    }
+}
+
 
