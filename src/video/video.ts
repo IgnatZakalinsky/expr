@@ -15,7 +15,7 @@ export const addVideo = (req: Request, res: Response) => {
         author: 'it-incubator.eu'
     }
     videos.push(newVideo)
-    res.status(200).json(newVideo)
+    res.status(201).json(newVideo)
 }
 export const getVideo = (req: Request, res: Response) => {
     res.status(200).json({video: videos.find(v => v.id === +req.params.id)})
