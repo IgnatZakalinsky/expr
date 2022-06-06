@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.get('/', (req: Request, res: Response) => {
-    res.status(200).json({hello: 'nya'})
+    res.status(200).json({hello: 'nya 1.1'})
 })
 
 app.get('/videos', getVideos)

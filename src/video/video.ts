@@ -12,6 +12,9 @@ export const addVideo = (req: Request, res: Response) => {
     if (typeof req.body.title !== 'string') {
         res.status(400).json({errorsMessages: [{message: 'not string', field: "title"}], resultCode: 1})
         return
+    } else if (req.body.title.length > 40) {
+        res.status(400).json({errorsMessages: [{message: 'too long title', field: "title"}], resultCode: 1})
+        return
     }
 
     const newVideo = {
@@ -23,7 +26,12 @@ export const addVideo = (req: Request, res: Response) => {
     res.status(201).json(newVideo)
 }
 export const getVideo = (req: Request, res: Response) => {
-    res.status(200).json(videos.find(v => v.id === +req.params.id))
+    const x = videos.find(v => v.id === +req.params.id)
+    if (x) {
+        res.status(200).json(x)
+    } else {
+        res.status(404).json({})
+    }
 }
 export const delVideo = (req: Request, res: Response) => {
     const x = videos.find(v => v.id === +req.params.id)
@@ -38,8 +46,16 @@ export const changeVideo = (req: Request, res: Response) => {
     if (typeof req.body.title !== 'string') {
         res.status(400).json({errorsMessages: [{message: 'not string', field: "title"}], resultCode: 1})
         return
+    } else if (req.body.title.length > 40) {
+        res.status(400).json({errorsMessages: [{message: 'too long title', field: "title"}], resultCode: 1})
+        return
+    } else {
+        const x = videos.find(v => v.id === +req.params.id)
+        if (x) {
+            videos = videos.map(v => v.id === +req.params.id ? {...v, title: req.body.title} : v)
+            res.status(204).json({})
+        } else {
+            res.status(404).json({})
+        }
     }
-    
-    videos = videos.map(v => v.id === +req.params.id ? {...v, title: req.body.title} : v)
-    res.status(204).json({})
 }
