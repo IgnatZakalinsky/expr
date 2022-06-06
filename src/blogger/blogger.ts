@@ -15,9 +15,10 @@ export const changeBloggers = (x: { id: number, name: string, youtubeUrl: string
 
 export const validateBlogger = (x: {name: string, youtubeUrl: string}) => {
     const errors: { message: string, field: string }[] = []
+    checkLink(x.youtubeUrl, 'youtubeUrl', errors)
     checkString(x.name, 'name', errors)
     checkLength(x.name, 40, 'name', errors)
-    checkLink(x.youtubeUrl, 'youtubeUrl', errors)
+
     return errors
 }
 

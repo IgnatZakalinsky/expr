@@ -3,7 +3,8 @@ import cors from 'cors'
 import {addVideo, changeVideo, delVideo, getVideo, getVideos} from './video/video'
 import bodyParser from 'body-parser'
 import {addBlogger, changeBlogger, delBlogger, getBlogger, getBloggers} from './blogger/blogger'
-import {addPost, changePost, delPost, getPost, getPosts} from "./blogger/post";
+import {addPost, changePost, delPost, getPost, getPosts} from './blogger/post'
+import {globalCatch} from './common/errors'
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -36,6 +37,7 @@ app.get('/posts/:id', getPost)
 app.delete('/posts/:id', delPost)
 app.put('/posts/:id', changePost)
 
+globalCatch()
 
 app.listen(port, () => {
     console.log('listen port: ' + port)
