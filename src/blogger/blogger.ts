@@ -17,7 +17,7 @@ export const validateBlogger = (x: {name: string, youtubeUrl: string}) => {
     const errors: { message: string, field: string }[] = []
     checkLink(x.youtubeUrl, 'youtubeUrl', errors)
     checkString(x.name, 'name', errors)
-    checkLength(x.name, 40, 'name', errors)
+    checkLength(x.name, 20, 'name', errors)
     checkLength(x.youtubeUrl, 100, 'youtubeUrl', errors)
 
     return errors

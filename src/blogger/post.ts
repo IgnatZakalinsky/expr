@@ -25,6 +25,7 @@ export const validatePost = (x: { title: string, shortDescription: string, conte
     checkString(x.shortDescription, 'shortDescription', errors)
     checkLength(x.title, 30, 'title', errors)
     checkLength(x.shortDescription, 30, 'shortDescription', errors)
+    checkLength(x.content, 1000, 'content', errors)
 
     return errors
 }
