@@ -56,7 +56,12 @@ export const changePost = (req: Request, res: Response) => {
     } else {
         const x = posts.find(v => v.id === +req.params.id)
         if (x) {
-            posts = posts.map(v => v.id === +req.params.id ? {...v, name: req.body.name, youtubeUrl: req.body.youtubeUrl} : v)
+            posts = posts.map(v => v.id === +req.params.id ? {
+                ...v,
+                title: req.body.title,
+                shortDescription: req.body.shortDescription,
+                content: req.body.content,
+            } : v)
             res.status(204).json({})
         } else {
             res.status(404).json({})

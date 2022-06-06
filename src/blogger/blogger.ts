@@ -52,7 +52,11 @@ export const changeBlogger = (req: Request, res: Response) => {
     } else {
         const x = bloggers.find(v => v.id === +req.params.id)
         if (x) {
-            bloggers = bloggers.map(v => v.id === +req.params.id ? {...v, name: req.body.name, youtubeUrl: req.body.youtubeUrl} : v)
+            bloggers = bloggers.map(v => v.id === +req.params.id ? {
+                ...v,
+                name: req.body.name,
+                youtubeUrl: req.body.youtubeUrl
+            } : v)
             res.status(204).json({})
         } else {
             res.status(404).json({})
