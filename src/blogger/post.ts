@@ -1,20 +1,45 @@
 import {Request, Response} from 'express'
-import {bloggers} from './blogger'
+import {checkLength, checkLink, checkString} from '../validators/validators'
+import { bloggers } from './blogger'
 
 export let posts = [
-    {id: 1, title: "string", shortDescription: "string", content: "string", bloggerId: 1,bloggerName: "string"},
-    {id: 2, title: "string2", shortDescription: "string2", content: "string2", bloggerId: 2,bloggerName: "string2"},
+    {id: 1, title: 'string', shortDescription: 'string', content: 'string', bloggerId: 1, bloggerName: 'string'},
+    {id: 2, title: 'string2', shortDescription: 'string2', content: 'string2', bloggerId: 2, bloggerName: 'string2'},
 ]
+export const findPost = (id: number) => posts.find(v => v.id === id)
+export const deletePost = (id: number) => {
+    posts = posts.filter(v => v.id !== id)
+}
+export const changePosts = (x: { id: number, title: string, shortDescription: string, content: string }) => {
+    posts = posts.map(v => v.id === x.id ? {
+        ...v,
+        title: x.title,
+        shortDescription: x.shortDescription,
+        content: x.content,
+    } : v)
+}
+
+export const validatePost = (x: { title: string, shortDescription: string, content: string }) => {
+    const errors: { message: string, field: string }[] = []
+    checkString(x.title, 'title', errors)
+    checkString(x.shortDescription, 'shortDescription', errors)
+    checkLength(x.title, 40, 'title', errors)
+    checkLength(x.shortDescription, 30, 'shortDescription', errors)
+
+    return errors
+}
 
 export const getPosts = (req: Request, res: Response) => {
     res.status(200).json(posts)
 }
 export const addPost = (req: Request, res: Response) => {
-    if (typeof req.body.title !== 'string') {
-        res.status(400).json({errorsMessages: [{message: 'title not string', field: "title"}], resultCode: 1})
-        return
-    } else if (req.body.title.length > 40) {
-        res.status(400).json({errorsMessages: [{message: 'too long title', field: "title"}], resultCode: 1})
+    const errors = validatePost({
+        title: req.body.title,
+        shortDescription: req.body.shortDescription,
+        content: req.body.content,
+    })
+    if (errors.length) {
+        res.status(400).json({errorsMessages: errors, resultCode: 1})
         return
     }
 
@@ -30,7 +55,7 @@ export const addPost = (req: Request, res: Response) => {
     res.status(201).json(newPost)
 }
 export const getPost = (req: Request, res: Response) => {
-    const x = posts.find(v => v.id === +req.params.id)
+    const x = findPost(+req.params.id)
     if (x) {
         res.status(200).json(x)
     } else {
@@ -38,33 +63,34 @@ export const getPost = (req: Request, res: Response) => {
     }
 }
 export const delPost = (req: Request, res: Response) => {
-    const x = posts.find(v => v.id === +req.params.id)
+    const x = findPost(+req.params.id)
     if (x) {
-        posts = posts.filter(v => v.id !== +req.params.id)
+        deletePost(+req.params.id)
         res.status(204).json({})
     } else {
         res.status(404).json({})
     }
 }
 export const changePost = (req: Request, res: Response) => {
-    if (typeof req.body.title !== 'string') {
-        res.status(400).json({errorsMessages: [{message: 'title not string', field: "title"}], resultCode: 1})
+    const errors = validatePost({
+        title: req.body.title,
+        shortDescription: req.body.shortDescription,
+        content: req.body.content,
+    })
+    if (errors.length) {
+        res.status(400).json({errorsMessages: errors, resultCode: 1})
         return
-    } else if (req.body.title.length > 40) {
-        res.status(400).json({errorsMessages: [{message: 'too long title', field: "title"}], resultCode: 1})
-        return
+    }
+    const x = findPost(+req.params.id)
+    if (x) {
+        changePosts({
+            id: +req.params.id,
+            title: req.body.title,
+            shortDescription: req.body.shortDescription,
+            content: req.body.content
+        })
+        res.status(204).json({})
     } else {
-        const x = posts.find(v => v.id === +req.params.id)
-        if (x) {
-            posts = posts.map(v => v.id === +req.params.id ? {
-                ...v,
-                title: req.body.title,
-                shortDescription: req.body.shortDescription,
-                content: req.body.content,
-            } : v)
-            res.status(204).json({})
-        } else {
-            res.status(404).json({})
-        }
+        res.status(404).json({})
     }
 }

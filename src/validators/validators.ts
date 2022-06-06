@@ -17,13 +17,14 @@ export const checkLength = (
     field: string,
     errors: {message: string, field: string}[]
 ) => {
-    if (value.length > count) {
+    if ((value?.length || 0) > count) {
         errors.push({message: 'too long ' + field, field})
         return false
     } else {
         return true
     }
 }
+
 export const checkLink = (
     value: string,
     field: string,
