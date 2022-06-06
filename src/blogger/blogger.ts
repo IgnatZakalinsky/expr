@@ -18,6 +18,7 @@ export const validateBlogger = (x: {name: string, youtubeUrl: string}) => {
     checkLink(x.youtubeUrl, 'youtubeUrl', errors)
     checkString(x.name, 'name', errors)
     checkLength(x.name, 40, 'name', errors)
+    checkLength(x.youtubeUrl, 100, 'youtubeUrl', errors)
 
     return errors
 }

@@ -23,7 +23,7 @@ export const validatePost = (x: { title: string, shortDescription: string, conte
     const errors: { message: string, field: string }[] = []
     checkString(x.title, 'title', errors)
     checkString(x.shortDescription, 'shortDescription', errors)
-    checkLength(x.title, 40, 'title', errors)
+    checkLength(x.title, 30, 'title', errors)
     checkLength(x.shortDescription, 30, 'shortDescription', errors)
 
     return errors
