@@ -95,7 +95,7 @@ export const changePost = (req: Request, res: Response) => {
         })
         return
     }
-    
+
     const errors = validatePost({
         title: req.body.title,
         shortDescription: req.body.shortDescription,
