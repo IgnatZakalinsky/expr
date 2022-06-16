@@ -5,7 +5,8 @@ import {bloggersRouter, postsRouter} from './blogger/blogersAndPostsRouter'
 const blackIPs = ['178.127.34.230', '']
 const blockIPsMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
-    console.log(req.headers['x-forwarded-for'])
+    console.log('ip: ', req.headers['x-forwarded-for'])
+
     // console.log(req.headers['X-Forwarded-For'])
     // console.log(req.headers['x-client-ip'])
     // console.log(req.headers['X-Client-IP'])
@@ -50,7 +51,7 @@ const countMiddleware = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const checkContentTypeMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    if (req.headers['content-type'] !== 'application/json') {
+    if (req.is('application/json')) {
         res.status(400).json({error: 'Bad content type'})
         return
     }
