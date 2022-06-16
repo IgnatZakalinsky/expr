@@ -51,7 +51,7 @@ const countMiddleware = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const checkContentTypeMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    if (req.is('application/json')) {
+    if (!req.is('application/json')) {
         res.status(400).json({error: 'Bad content type'})
         return
     }
