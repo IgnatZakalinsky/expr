@@ -70,7 +70,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 export const hw1 = (app: Express) => {
     app.use(countMiddleware)
     app.use(blockIPsMiddleware)
-    app.use(checkContentTypeMiddleware)
+    // app.use(checkContentTypeMiddleware)
 
     app.use('/videos', videoRouter)
     app.use('/bloggers', bloggersRouter)
