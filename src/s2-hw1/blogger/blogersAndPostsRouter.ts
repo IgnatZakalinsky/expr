@@ -1,6 +1,6 @@
 import {Router} from 'express'
-import {addBlogger, changeBlogger, delBlogger, getBlogger, getBloggers} from './blogger'
-import {addPost, changePost, delPost, getPost, getPosts} from './post'
+import {addBlogger, changeBlogger, delBlogger, getBlogger, getBloggers} from './il/blogger'
+import {addPost, changePost, delPost, getPost, getPosts} from './il/post'
 
 export const bloggersRouter = Router()
 

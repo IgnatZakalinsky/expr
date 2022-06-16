@@ -1,17 +1,6 @@
 import {Request, Response} from 'express'
-import {checkExistString, checkLength, checkLink, checkString} from '../../s1-common/validators/validators'
-
-export let bloggers = [
-    {id: 1, name: 'string', youtubeUrl: 'string'},
-    {id: 2, name: 'string2', youtubeUrl: 'string2'},
-]
-export const findBlogger = (id: number) => bloggers.find(v => v.id === id)
-export const deleteBlogger = (id: number) => {
-    bloggers = bloggers.filter(v => v.id !== id)
-}
-export const changeBloggers = (x: { id: number, name: string, youtubeUrl: string }) => {
-    bloggers = bloggers.map(v => v.id === x.id ? {...v, name: x.name, youtubeUrl: x.youtubeUrl} : v)
-}
+import {checkExistString, checkLength, checkLink, checkString} from '../../../s1-common/validators/validators'
+import {bloggersRepository} from '../dal/bloggersRepository'
 
 export const validateBlogger = (x: {name: string, youtubeUrl: string}) => {
     const errors: { message: string, field: string }[] = []
@@ -25,7 +14,7 @@ export const validateBlogger = (x: {name: string, youtubeUrl: string}) => {
 }
 
 export const getBloggers = (req: Request, res: Response) => {
-    res.status(200).json(bloggers)
+    res.status(200).json(bloggersRepository.getBloggers())
 }
 export const addBlogger = (req: Request, res: Response) => {
     const errors = validateBlogger({name: req.body.name, youtubeUrl: req.body.youtubeUrl})
@@ -37,16 +26,11 @@ export const addBlogger = (req: Request, res: Response) => {
         return
     }
 
-    const newBlogger = {
-        id: Date.now(),
-        name: req.body.name,
-        youtubeUrl: req.body.youtubeUrl,
-    }
-    bloggers.push(newBlogger)
+    const newBlogger = bloggersRepository.addBlogger(req.body.name, req.body.youtubeUrl)
     res.status(201).json(newBlogger)
 }
 export const getBlogger = (req: Request, res: Response) => {
-    const x = findBlogger(+req.params.id)
+    const x = bloggersRepository.findBlogger(+req.params.id)
     if (x) {
         res.status(200).json(x)
     } else {
@@ -54,9 +38,9 @@ export const getBlogger = (req: Request, res: Response) => {
     }
 }
 export const delBlogger = (req: Request, res: Response) => {
-    const x = findBlogger(+req.params.id)
+    const x = bloggersRepository.findBlogger(+req.params.id)
     if (x) {
-        deleteBlogger(+req.params.id)
+        bloggersRepository.deleteBlogger(+req.params.id)
         res.status(204).json({})
     } else {
         res.status(404).json({})
@@ -72,9 +56,9 @@ export const changeBlogger = (req: Request, res: Response) => {
         return
     }
 
-    const x = findBlogger(+req.params.id)
+    const x = bloggersRepository.findBlogger(+req.params.id)
     if (x) {
-        changeBloggers({id: +req.params.id, name: req.body.name, youtubeUrl: req.body.youtubeUrl})
+        bloggersRepository.changeBloggers({id: +req.params.id, name: req.body.name, youtubeUrl: req.body.youtubeUrl})
         res.status(204).json({})
     } else {
         res.status(404).json({})

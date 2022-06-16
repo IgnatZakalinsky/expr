@@ -1,23 +1,7 @@
 import {Request, Response} from 'express'
-import {checkExistString, checkLength, checkLink, checkString} from '../../s1-common/validators/validators'
-import { bloggers } from './blogger'
-
-export let posts = [
-    {id: 1, title: 'string', shortDescription: 'string', content: 'string', bloggerId: 1, bloggerName: 'string'},
-    {id: 2, title: 'string2', shortDescription: 'string2', content: 'string2', bloggerId: 2, bloggerName: 'string2'},
-]
-export const findPost = (id: number) => posts.find(v => v.id === id)
-export const deletePost = (id: number) => {
-    posts = posts.filter(v => v.id !== id)
-}
-export const changePosts = (x: { id: number, title: string, shortDescription: string, content: string }) => {
-    posts = posts.map(v => v.id === x.id ? {
-        ...v,
-        title: x.title,
-        shortDescription: x.shortDescription,
-        content: x.content,
-    } : v)
-}
+import {checkExistString, checkLength, checkString} from '../../../s1-common/validators/validators'
+import {postsRepository} from "../dal/postsRepository";
+import {bloggersRepository} from "../dal/bloggersRepository";
 
 export const validatePost = (x: { title: string, shortDescription: string, content: string }) => {
     const errors: { message: string, field: string }[] = []
@@ -33,10 +17,10 @@ export const validatePost = (x: { title: string, shortDescription: string, conte
 }
 
 export const getPosts = (req: Request, res: Response) => {
-    res.status(200).json(posts)
+    res.status(200).json(postsRepository.getPosts())
 }
 export const addPost = (req: Request, res: Response) => {
-    const bl = bloggers.find(b => b.id === req.body.bloggerId)
+    const bl = bloggersRepository.findBlogger(+req.params.bloggerId)
     if (!bl) {
         res.status(400).json({
             errorsMessages: [{message: 'blogger not exist', field: 'bloggerId'}],
@@ -58,19 +42,11 @@ export const addPost = (req: Request, res: Response) => {
         return
     }
 
-    const newPost = {
-        id: Date.now(),
-        title: req.body.title,
-        shortDescription: req.body.shortDescription,
-        content: req.body.content,
-        bloggerId: bl.id,
-        bloggerName: bl.name,
-    }
-    posts.push(newPost)
+    const newPost = postsRepository.addPost(req.body, bl)
     res.status(201).json(newPost)
 }
 export const getPost = (req: Request, res: Response) => {
-    const x = findPost(+req.params.id)
+    const x = postsRepository.findPost(+req.params.id)
     if (x) {
         res.status(200).json(x)
     } else {
@@ -78,16 +54,16 @@ export const getPost = (req: Request, res: Response) => {
     }
 }
 export const delPost = (req: Request, res: Response) => {
-    const x = findPost(+req.params.id)
+    const x = postsRepository.findPost(+req.params.id)
     if (x) {
-        deletePost(+req.params.id)
+        postsRepository.deletePost(+req.params.id)
         res.status(204).json({})
     } else {
         res.status(404).json({})
     }
 }
 export const changePost = (req: Request, res: Response) => {
-    const bl = bloggers.find(b => b.id === req.body.bloggerId)
+    const bl = bloggersRepository.findBlogger(+req.params.bloggerId)
     if (!bl) {
         res.status(400).json({
             errorsMessages: [{message: 'blogger not exist', field: 'bloggerId'}],
@@ -108,9 +84,9 @@ export const changePost = (req: Request, res: Response) => {
         })
         return
     }
-    const x = findPost(+req.params.id)
+    const x = postsRepository.findPost(+req.params.id)
     if (x) {
-        changePosts({
+        postsRepository.changePosts({
             id: +req.params.id,
             title: req.body.title,
             shortDescription: req.body.shortDescription,
