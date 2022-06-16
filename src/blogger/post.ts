@@ -1,5 +1,5 @@
 import {Request, Response} from 'express'
-import {checkLength, checkLink, checkString} from '../validators/validators'
+import {checkExistString, checkLength, checkLink, checkString} from '../validators/validators'
 import { bloggers } from './blogger'
 
 export let posts = [
@@ -24,8 +24,10 @@ export const validatePost = (x: { title: string, shortDescription: string, conte
     checkString(x.title, 'title', errors)
     checkString(x.shortDescription, 'shortDescription', errors)
     checkLength(x.title, 30, 'title', errors)
+    checkExistString(x.title, 'title', errors)
     checkLength(x.shortDescription, 30, 'shortDescription', errors)
     checkLength(x.content, 1000, 'content', errors)
+    checkExistString(x.content, 'content', errors)
 
     return errors
 }

@@ -24,6 +24,18 @@ export const checkLength = (
         return true
     }
 }
+export const checkExistString = (
+    value: string,
+    field: string,
+    errors: {message: string, field: string}[]
+) => {
+    if (value?.trim().length < 1) {
+        errors.push({message: 'not exist string ' + field, field})
+        return false
+    } else {
+        return true
+    }
+}
 
 export const checkLink = (
     value: string,
