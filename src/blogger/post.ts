@@ -36,6 +36,15 @@ export const getPosts = (req: Request, res: Response) => {
     res.status(200).json(posts)
 }
 export const addPost = (req: Request, res: Response) => {
+    const bl = bloggers.find(b => b.id === req.body.bloggerId)
+    if (!bl) {
+        res.status(400).json({
+            errorsMessages: [{message: 'blogger not exist', field: 'bloggerId'}],
+            // resultCode: 1
+        })
+        return
+    }
+
     const errors = validatePost({
         title: req.body.title,
         shortDescription: req.body.shortDescription,
@@ -54,8 +63,8 @@ export const addPost = (req: Request, res: Response) => {
         title: req.body.title,
         shortDescription: req.body.shortDescription,
         content: req.body.content,
-        bloggerId: req.body.bloggerId,
-        bloggerName: bloggers.find(b => b.id === req.body.bloggerId)?.name || '',
+        bloggerId: bl.id,
+        bloggerName: bl.name,
     }
     posts.push(newPost)
     res.status(201).json(newPost)
@@ -78,6 +87,15 @@ export const delPost = (req: Request, res: Response) => {
     }
 }
 export const changePost = (req: Request, res: Response) => {
+    const bl = bloggers.find(b => b.id === req.body.bloggerId)
+    if (!bl) {
+        res.status(400).json({
+            errorsMessages: [{message: 'blogger not exist', field: 'bloggerId'}],
+            // resultCode: 1
+        })
+        return
+    }
+    
     const errors = validatePost({
         title: req.body.title,
         shortDescription: req.body.shortDescription,

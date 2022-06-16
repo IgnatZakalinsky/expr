@@ -1,5 +1,5 @@
 import {Request, Response} from 'express'
-import {checkLength, checkLink, checkString} from '../validators/validators'
+import {checkExistString, checkLength, checkLink, checkString} from '../validators/validators'
 
 export let bloggers = [
     {id: 1, name: 'string', youtubeUrl: 'string'},
@@ -18,6 +18,7 @@ export const validateBlogger = (x: {name: string, youtubeUrl: string}) => {
     checkLink(x.youtubeUrl, 'youtubeUrl', errors)
     checkString(x.name, 'name', errors)
     checkLength(x.name, 15, 'name', errors)
+    checkExistString(x.name, 'name', errors)
     checkLength(x.youtubeUrl, 100, 'youtubeUrl', errors)
 
     return errors
