@@ -36,7 +36,7 @@ const blockIPsMiddleware = (req: Request, res: Response, next: NextFunction) => 
     // console.log(req.info?.remoteAddress)
 
     if (blackIPs.find(i => i === req.headers['x-forwarded-for'])) {
-        res.status(403).json({reason: 'blackIP'})
+        res.status(403).json({reason: 'blocked IP'})
         return
     }
 
@@ -51,15 +51,17 @@ const countMiddleware = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const checkContentTypeMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.is('application/json')) {
-        res.status(400).json({error: 'Bad content type'})
-        return
-    }
+    console.log('content-type: ', req.headers['content-type'], ' is: ', req.is('application/json'))
+    // if (!req.is('application/json')) {
+    //     res.status(400).json({error: 'Bad content type'})
+    //     return
+    // }
 
     next()
 }
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    if (req.headers.Authorization !== 'Basic <Base64 encoded admin:qwerty>') {
+    // if (req.headers.Authorization !== 'Basic <Base64 encoded admin:qwerty>') {
+    if (req.headers.Authorization !== 'Basic YWRtaW46cXdlcnR5') {
         res.status(401).json({})
         return
     }
@@ -70,7 +72,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 export const hw1 = (app: Express) => {
     app.use(countMiddleware)
     app.use(blockIPsMiddleware)
-    // app.use(checkContentTypeMiddleware)
+    app.use(checkContentTypeMiddleware)
 
     app.use('/videos', videoRouter)
     app.use('/bloggers', bloggersRouter)
