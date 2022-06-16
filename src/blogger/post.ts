@@ -42,7 +42,10 @@ export const addPost = (req: Request, res: Response) => {
         content: req.body.content,
     })
     if (errors.length) {
-        res.status(400).json({errorsMessages: errors, resultCode: 1})
+        res.status(400).json({
+            errorsMessages: errors,
+            // resultCode: 1
+        })
         return
     }
 
@@ -81,7 +84,10 @@ export const changePost = (req: Request, res: Response) => {
         content: req.body.content,
     })
     if (errors.length) {
-        res.status(400).json({errorsMessages: errors, resultCode: 1})
+        res.status(400).json({
+            errorsMessages: errors,
+            // resultCode: 1
+        })
         return
     }
     const x = findPost(+req.params.id)

@@ -29,7 +29,10 @@ export const getBloggers = (req: Request, res: Response) => {
 export const addBlogger = (req: Request, res: Response) => {
     const errors = validateBlogger({name: req.body.name, youtubeUrl: req.body.youtubeUrl})
     if (errors.length) {
-        res.status(400).json({errorsMessages: errors, resultCode: 1})
+        res.status(400).json({
+            errorsMessages: errors,
+            // resultCode: 1
+        })
         return
     }
 
@@ -61,7 +64,10 @@ export const delBlogger = (req: Request, res: Response) => {
 export const changeBlogger = (req: Request, res: Response) => {
     const errors = validateBlogger({name: req.body.name, youtubeUrl: req.body.youtubeUrl})
     if (errors.length) {
-        res.status(400).json({errorsMessages: errors, resultCode: 1})
+        res.status(400).json({
+            errorsMessages: errors,
+            // resultCode: 1
+        })
         return
     }
 
