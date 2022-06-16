@@ -1,5 +1,5 @@
 import {Request, Response} from 'express'
-import {checkExistString, checkLength, checkLink, checkString} from '../validators/validators'
+import {checkExistString, checkLength, checkLink, checkString} from '../../s1-common/validators/validators'
 
 export let bloggers = [
     {id: 1, name: 'string', youtubeUrl: 'string'},

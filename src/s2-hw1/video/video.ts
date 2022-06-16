@@ -1,5 +1,5 @@
 import {Request, Response} from 'express'
-import {checkLength, checkString} from '../validators/validators'
+import {checkLength, checkString} from '../../s1-common/validators/validators'
 
 export let videos = [
     {id: 1, title: 'x1', author: 'xx1'},

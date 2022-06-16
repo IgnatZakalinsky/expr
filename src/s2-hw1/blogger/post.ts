@@ -1,5 +1,5 @@
 import {Request, Response} from 'express'
-import {checkExistString, checkLength, checkLink, checkString} from '../validators/validators'
+import {checkExistString, checkLength, checkLink, checkString} from '../../s1-common/validators/validators'
 import { bloggers } from './blogger'
 
 export let posts = [
