@@ -17,7 +17,7 @@ export const validatePost = (x: { title: string, shortDescription: string, conte
 }
 
 export const existBloggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    const bl = bloggersRepository.findBlogger(+req.params.bloggerId)
+    const bl = bloggersRepository.findBlogger(+req.body.bloggerId)
     if (!bl) {
         res.status(400).json({
             errorsMessages: [{message: 'blogger not exist', field: 'bloggerId'}],
@@ -34,27 +34,6 @@ export const getPosts = (req: Request, res: Response) => {
     res.status(200).json(postsRepository.getPosts())
 }
 export const addPost = (req: Request, res: Response) => {
-    // const bl = bloggersRepository.findBlogger(+req.params.bloggerId)
-    // if (!bl) {
-    //     res.status(400).json({
-    //         errorsMessages: [{message: 'blogger not exist', field: 'bloggerId'}],
-    //         // resultCode: 1
-    //     })
-    //     return
-    // }
-
-    // const errors = validatePost({
-    //     title: req.body.title,
-    //     shortDescription: req.body.shortDescription,
-    //     content: req.body.content,
-    // })
-    // if (errors.length) {
-    //     res.status(400).json({
-    //         errorsMessages: errors,
-    //         // resultCode: 1
-    //     })
-    //     return
-    // }
 
     const newPost = postsRepository.addPost({
         title: req.body.title,
@@ -81,30 +60,9 @@ export const delPost = (req: Request, res: Response) => {
     }
 }
 export const changePost = (req: Request, res: Response) => {
-    // const bl = bloggersRepository.findBlogger(+req.params.bloggerId)
-    // if (!bl) {
-    //     res.status(400).json({
-    //         errorsMessages: [{message: 'blogger not exist', field: 'bloggerId'}],
-    //         // resultCode: 1
-    //     })
-    //     return
-    // }
-
-    // const errors = validatePost({
-    //     title: req.body.title,
-    //     shortDescription: req.body.shortDescription,
-    //     content: req.body.content,
-    // })
-    // if (errors.length) {
-    //     res.status(400).json({
-    //         errorsMessages: errors,
-    //         // resultCode: 1
-    //     })
-    //     return
-    // }
     const x = postsRepository.findPost(+req.params.id)
     if (x) {
-        postsRepository.changePosts({
+        postsRepository.changePost({
             id: +req.params.id,
             title: req.body.title,
             shortDescription: req.body.shortDescription,

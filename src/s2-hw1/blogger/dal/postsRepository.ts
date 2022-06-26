@@ -34,7 +34,7 @@ export const postsRepository = {
         posts = posts.filter(v => v.id !== id)
     },
 
-    changePosts: (x: { id: number, title: string, shortDescription: string, content: string }) => {
+    changePost: (x: { id: number, title: string, shortDescription: string, content: string }) => {
         posts = posts.map(v => v.id === x.id ? {
             ...v,
             title: x.title,

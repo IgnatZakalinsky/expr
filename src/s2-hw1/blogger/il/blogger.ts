@@ -17,14 +17,6 @@ export const getBloggers = (req: Request, res: Response) => {
     res.status(200).json(bloggersRepository.getBloggers())
 }
 export const addBlogger = (req: Request, res: Response) => {
-    // const errors = validateBlogger({name: req.body.name, youtubeUrl: req.body.youtubeUrl})
-    // if (errors.length) {
-    //     res.status(400).json({
-    //         errorsMessages: errors,
-    //         // resultCode: 1
-    //     })
-    //     return
-    // }
 
     const newBlogger = bloggersRepository.addBlogger(req.body.name, req.body.youtubeUrl)
     res.status(201).json(newBlogger)
@@ -47,18 +39,10 @@ export const delBlogger = (req: Request, res: Response) => {
     }
 }
 export const changeBlogger = (req: Request, res: Response) => {
-    // const errors = validateBlogger({name: req.body.name, youtubeUrl: req.body.youtubeUrl})
-    // if (errors.length) {
-    //     res.status(400).json({
-    //         errorsMessages: errors,
-    //         // resultCode: 1
-    //     })
-    //     return
-    // }
 
     const x = bloggersRepository.findBlogger(+req.params.id)
     if (x) {
-        bloggersRepository.changeBloggers({id: +req.params.id, name: req.body.name, youtubeUrl: req.body.youtubeUrl})
+        bloggersRepository.changeBlogger({id: +req.params.id, name: req.body.name, youtubeUrl: req.body.youtubeUrl})
         res.status(204).json({})
     } else {
         res.status(404).json({})

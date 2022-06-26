@@ -6,7 +6,7 @@ import {body, validationResult} from 'express-validator'
 export const validationsErrorsMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.status(400).json({ errors: errors.array() })
+        res.status(400).json({ errorsMessages: errors.array().map(e => ({message: e.msg, field: e.param})) }) // {"errors":[{"value":"","msg":"Invalid value","param":"name","location":"body"}]}
         return
     }
 

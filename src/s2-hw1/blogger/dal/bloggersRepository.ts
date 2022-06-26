@@ -28,7 +28,7 @@ export const bloggersRepository = {
         bloggers = bloggers.filter(v => v.id !== id)
     },
 
-    changeBloggers: (x: { id: number, name: string, youtubeUrl: string }) => {
+    changeBlogger: (x: { id: number, name: string, youtubeUrl: string }) => {
         bloggers = bloggers.map(v => v.id === x.id ? {...v, name: x.name, youtubeUrl: x.youtubeUrl} : v)
     },
 }

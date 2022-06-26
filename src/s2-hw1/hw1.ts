@@ -6,6 +6,7 @@ const blackIPs = ['178.127.34.230', '']
 const blockIPsMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
     console.log('ip: ', req.headers['x-forwarded-for'])
+    console.log('ip: ', req.ip)
 
     // console.log(req.headers['X-Forwarded-For'])
     // console.log(req.headers['x-client-ip'])
