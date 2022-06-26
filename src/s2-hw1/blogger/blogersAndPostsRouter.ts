@@ -4,12 +4,11 @@ import {addPost, changePost, delPost, existBloggerMiddleware, getPost, getPosts}
 import {body, validationResult} from 'express-validator'
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    // if (req.headers.Authorization !== 'Basic <Base64 encoded admin:qwerty>') {
-    console.log('Authorization: ', req.headers.Authorization)
-    // if (req.headers.Authorization !== 'Basic YWRtaW46cXdlcnR5') { // "Basic YWRtaW46cXdlcnR5"
-    //     res.status(401).json({})
-    //     return
-    // }
+    console.log('authorization: ', req.headers.authorization)
+    if (req.headers.authorization !== 'Basic YWRtaW46cXdlcnR5') {
+        res.status(401).json({})
+        return
+    }
 
     next()
 }
@@ -27,7 +26,7 @@ export const validationsErrorsMiddleware = (req: Request, res: Response, next: N
 export const bloggersRouter = Router()
 
 export const bloggerValidationsMiddleware = [
-    body('name').exists().trim().isLength({min: 1, max: 15}),
+    body('name').trim().isLength({min: 1, max: 15}),
     body('youtubeUrl').trim().isLength({min: 1, max: 100}).bail()
         .isURL()
 ]
@@ -44,7 +43,7 @@ bloggersRouter.get('/:id', getBlogger)
 bloggersRouter.delete('/:id', authMiddleware, delBlogger)
 bloggersRouter.put(
     '/:id',
-    // authMiddleware,
+    authMiddleware,
     bloggerValidationsMiddleware,
     validationsErrorsMiddleware,
     changeBlogger
