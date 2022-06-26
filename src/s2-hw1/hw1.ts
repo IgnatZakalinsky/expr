@@ -60,7 +60,7 @@ const checkContentTypeMiddleware = (req: Request, res: Response, next: NextFunct
 
     next()
 }
-const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     // if (req.headers.Authorization !== 'Basic <Base64 encoded admin:qwerty>') {
     if (req.headers.Authorization !== 'Basic YWRtaW46cXdlcnR5') {
         res.status(401).json({})

@@ -2,6 +2,7 @@ import {NextFunction, Request, Response, Router} from 'express'
 import {addBlogger, changeBlogger, delBlogger, getBlogger, getBloggers} from './il/blogger'
 import {addPost, changePost, delPost, existBloggerMiddleware, getPost, getPosts} from './il/post'
 import {body, validationResult} from 'express-validator'
+import { authMiddleware } from '../hw1'
 
 export const validationsErrorsMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
@@ -16,21 +17,24 @@ export const validationsErrorsMiddleware = (req: Request, res: Response, next: N
 export const bloggersRouter = Router()
 
 export const bloggerValidationsMiddleware = [
-    body('name').trim().isLength({min: 1, max: 15}),
-    body('youtubeUrl').trim().isLength({min: 1, max: 100}).isURL()
+    body('name').exists().trim().isLength({min: 1, max: 15}),
+    body('youtubeUrl').trim().isLength({min: 1, max: 100}).bail()
+        .isURL()
 ]
 
 bloggersRouter.get('/', getBloggers)
 bloggersRouter.post(
     '/',
+    authMiddleware,
     bloggerValidationsMiddleware,
     validationsErrorsMiddleware,
     addBlogger
 )
 bloggersRouter.get('/:id', getBlogger)
-bloggersRouter.delete('/:id', delBlogger)
+bloggersRouter.delete('/:id', authMiddleware, delBlogger)
 bloggersRouter.put(
     '/:id',
+    // authMiddleware,
     bloggerValidationsMiddleware,
     validationsErrorsMiddleware,
     changeBlogger
@@ -47,15 +51,17 @@ export const postValidationsMiddleware = [
 postsRouter.get('/', getPosts)
 postsRouter.post(
     '/',
+    authMiddleware,
     existBloggerMiddleware,
     postValidationsMiddleware,
     validationsErrorsMiddleware,
     addPost
 )
 postsRouter.get('/:id', getPost)
-postsRouter.delete('/:id', delPost)
+postsRouter.delete('/:id', authMiddleware, delPost)
 postsRouter.put(
     '/:id',
+    authMiddleware,
     existBloggerMiddleware,
     postValidationsMiddleware,
     validationsErrorsMiddleware,
