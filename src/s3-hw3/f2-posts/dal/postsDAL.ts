@@ -16,7 +16,7 @@ export const PostsDAL = {
             id: Date.now(),
             ...post
         }
-        await Post.insertOne(newPost)
+        await Post.insertOne({...newPost})
         return newPost
     },
     getById: async (id: number) => {

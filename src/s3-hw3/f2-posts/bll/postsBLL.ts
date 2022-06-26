@@ -15,13 +15,11 @@ export const PostsBLL = {
         }
     },
     add: async (post: Pick<PostType, 'title' | 'content' | 'shortDescription'>, blogger: BloggerType) => {
-        const newPost = {
+        return await PostsDAL.add({
             ...post,
             bloggerId: blogger.id,
             bloggerName: blogger.name,
-        }
-        await PostsDAL.add({...newPost})
-        return newPost
+        })
     },
     getById: async (id: number) => {
         return await PostsDAL.getById(id)
