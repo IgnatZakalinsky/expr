@@ -1,7 +1,7 @@
 import {Express, Request, Response} from 'express'
 import {bloggersRouter} from './f1-bloggers/il'
 import {blockIPsMiddleware, checkContentTypeMiddleware, countMiddleware, logMiddleware} from './globalMiddlewares'
-
+import {postsRouter} from './f2-posts/il'
 
 export const hw3 = async (app: Express) => {
     app.use(logMiddleware)
@@ -10,7 +10,7 @@ export const hw3 = async (app: Express) => {
     app.use(checkContentTypeMiddleware)
 
     app.use('/bloggers', bloggersRouter)
-    // app.use('/posts', postsRouter)
+    app.use('/posts', postsRouter)
 
     // default
     app.use((req: Request, res: Response) => {
