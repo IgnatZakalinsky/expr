@@ -11,7 +11,7 @@ export const PostsBLL = {
             totalCount,
             page: PageNumber,
             pageSize: PageSize,
-            pageCount: Math.ceil(totalCount / PageSize)
+            pagesCount: Math.ceil(totalCount / PageSize)
         }
     },
     add: async (post: Pick<PostType, 'title' | 'content' | 'shortDescription'>, blogger: BloggerType) => {

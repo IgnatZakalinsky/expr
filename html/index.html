@@ -62,8 +62,8 @@ params: <input type="checkbox" id="create_blogger_params"/>
 <script>
     read_posts.onclick = () => {
         if (posts_blogger_id.value) {
-            fetch('http://localhost:5000/bloggers/' + posts_blogger_id.value + '/posts?'
-                + '&PageNumber=' + posts_page.value
+            fetch('http://localhost:5000/bloggers/' + posts_blogger_id.value + '/posts'
+                + '?PageNumber=' + posts_page.value
                 + '&PageSize=' + posts_page_size.value
             )
                 .then(res => res.json())
@@ -71,8 +71,8 @@ params: <input type="checkbox" id="create_blogger_params"/>
             return
         }
 
-        fetch('http://localhost:5000/posts?'
-            + '&PageNumber=' + posts_page.value
+        fetch('http://localhost:5000/posts'
+            + '?PageNumber=' + posts_page.value
             + '&PageSize=' + posts_page_size.value
         )
             .then(res => res.json())
@@ -150,7 +150,8 @@ params: <input type="checkbox" id="create_blogger_params"/>
 
     //////////////////////////////////
     read_bloggers.onclick = () => {
-        fetch('http://localhost:5000/bloggers?SearchNameTerm=' + search_name.value
+        fetch('http://localhost:5000/bloggers'
+            + '?SearchNameTerm=' + search_name.value
             + '&PageNumber=' + page.value
             + '&PageSize=' + page_size.value
         )

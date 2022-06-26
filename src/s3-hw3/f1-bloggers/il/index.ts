@@ -3,6 +3,7 @@ import {bloggerValidationsMiddleware, existParamsBloggerMiddleware} from './midd
 import {authMiddleware, validationsErrorsMiddleware} from '../../globalMiddlewares'
 import {BloggersIL} from './bloggersIL'
 import {PostsIL} from '../../f2-posts/il/postsIL'
+import {postValidationsMiddleware} from '../../f2-posts/il/middlewares'
 
 export const bloggersRouter = Router()
 
@@ -25,4 +26,11 @@ bloggersRouter.put(
 )
 
 bloggersRouter.get('/:id/posts', existParamsBloggerMiddleware, PostsIL.readByBloggerId)
-bloggersRouter.post('/:id/posts', authMiddleware, existParamsBloggerMiddleware, PostsIL.add)
+bloggersRouter.post(
+    '/:id/posts',
+    authMiddleware,
+    existParamsBloggerMiddleware,
+    postValidationsMiddleware,
+    validationsErrorsMiddleware,
+    PostsIL.add
+)
