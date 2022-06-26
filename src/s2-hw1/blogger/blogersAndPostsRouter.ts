@@ -2,7 +2,16 @@ import {NextFunction, Request, Response, Router} from 'express'
 import {addBlogger, changeBlogger, delBlogger, getBlogger, getBloggers} from './il/blogger'
 import {addPost, changePost, delPost, existBloggerMiddleware, getPost, getPosts} from './il/post'
 import {body, validationResult} from 'express-validator'
-import { authMiddleware } from '../hw1'
+
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    // if (req.headers.Authorization !== 'Basic <Base64 encoded admin:qwerty>') {
+    if (req.headers.Authorization !== 'Basic YWRtaW46cXdlcnR5') {
+        res.status(401).json({})
+        return
+    }
+
+    next()
+}
 
 export const validationsErrorsMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);

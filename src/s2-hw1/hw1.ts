@@ -60,15 +60,6 @@ const checkContentTypeMiddleware = (req: Request, res: Response, next: NextFunct
 
     next()
 }
-export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    // if (req.headers.Authorization !== 'Basic <Base64 encoded admin:qwerty>') {
-    if (req.headers.Authorization !== 'Basic YWRtaW46cXdlcnR5') {
-        res.status(401).json({})
-        return
-    }
-
-    next()
-}
 
 export const hw1 = (app: Express) => {
     app.use(countMiddleware)
