@@ -2,14 +2,14 @@ import {Post} from '../../mongo'
 import {PostType} from '../../f0-types/post'
 
 export const PostsDAL = {
-    read: async (PageNumber: number = 1, PageSize: number = 10) => {
-        return await Post.find({}, {projection: {_id: 0}})
+    read: async (PageNumber: number = 1, PageSize: number = 10, bloggerId?: number) => {
+        return await Post.find(bloggerId ? {bloggerId} : {}, {projection: {_id: 0}})
             .skip((PageNumber - 1) * PageSize)
             .limit(PageSize)
             .toArray()
     },
-    count: async () => {
-        return await Post.countDocuments({})
+    count: async (bloggerId?: number) => {
+        return await Post.countDocuments(bloggerId ? {bloggerId} : {})
     },
     add: async (post: Omit<PostType, 'id'>) => {
         const newPost: PostType = {

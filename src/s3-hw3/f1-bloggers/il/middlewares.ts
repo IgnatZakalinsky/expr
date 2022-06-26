@@ -8,10 +8,24 @@ export const bloggerValidationsMiddleware = [
         .isURL()
 ]
 
-export const existBloggerMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+export const existBodyBloggerMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     const bl = await BloggersDAL.getById(+req.body.bloggerId)
     if (!bl) {
         res.status(400).json({
+            errorsMessages: [{message: 'blogger not exist', field: 'bloggerId'}],
+            // resultCode: 1
+        })
+        return
+    }
+
+    req.body.bl = bl
+    next()
+}
+
+export const existParamsBloggerMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+    const bl = await BloggersDAL.getById(+req.params.id)
+    if (!bl) {
+        res.status(404).json({
             errorsMessages: [{message: 'blogger not exist', field: 'bloggerId'}],
             // resultCode: 1
         })

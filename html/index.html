@@ -31,12 +31,14 @@
 <hr>
 
 <button id="create_post">create</button>
+params: <input type="checkbox" id="create_blogger_params"/>
 <input id="create_blogger_id" placeholder="bloggerId"/>
 <input id="create_title" placeholder="title"/>
 <input id="create_content" placeholder="content"/>
 <input id="create_short_description" placeholder="shortDescription"/>
 <hr>
 <button id="read_posts">read posts</button>
+<input id="posts_blogger_id" placeholder="bloggerId"/>
 <input id="posts_page" placeholder="page"/>
 <input id="posts_page_size" placeholder="page size"/>
 <hr>
@@ -59,6 +61,16 @@
 
 <script>
     read_posts.onclick = () => {
+        if (posts_blogger_id.value) {
+            fetch('http://localhost:5000/bloggers/' + posts_blogger_id.value + '/posts?'
+                + '&PageNumber=' + posts_page.value
+                + '&PageSize=' + posts_page_size.value
+            )
+                .then(res => res.json())
+                .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
+            return
+        }
+
         fetch('http://localhost:5000/posts?'
             + '&PageNumber=' + posts_page.value
             + '&PageSize=' + posts_page_size.value
@@ -67,6 +79,25 @@
             .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
     }
     create_post.onclick = () => {
+        if (create_blogger_params.checked) {
+            fetch('http://localhost:5000/bloggers/' + create_blogger_id.value + '/posts', {
+                method: 'POST',
+                body: JSON.stringify({
+                    bloggerId: create_blogger_id.value,
+                    title: create_title.value,
+                    content: create_content.value,
+                    shortDescription: create_short_description.value,
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: 'Basic YWRtaW46cXdlcnR5'
+                },
+            })
+                .then(res => res.json())
+                .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
+            return
+        }
+
         fetch('http://localhost:5000/posts', {
             method: 'POST',
             body: JSON.stringify({

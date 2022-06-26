@@ -8,6 +8,12 @@ export const PostsIL = {
         const answer = await PostsBLL.read(+(PageNumber || 1), +(PageSize || 10))
         res.status(200).json(answer)
     },
+    readByBloggerId: async (req: Request, res: Response) => {
+        const {PageNumber, PageSize} = req.query
+        const answer = await PostsBLL.read(+(PageNumber || 1), +(PageSize || 10), +req.body.bl.id)
+        res.status(200).json(answer)
+    },
+
     add: async (req: Request, res: Response) => {
         console.log(req.body)
 
