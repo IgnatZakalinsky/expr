@@ -17,7 +17,7 @@ export const BloggersDAL = {
             name: name,
             youtubeUrl: youtubeUrl,
         }
-        await Blogger.insertOne(newBlogger)
+        await Blogger.insertOne({...newBlogger})
         return newBlogger
     },
     getById: async (id: number) => {
