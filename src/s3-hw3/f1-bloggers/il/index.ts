@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import {bloggerValidationsMiddleware, existBodyBloggerMiddleware, existParamsBloggerMiddleware} from './middlewares'
+import {bloggerValidationsMiddleware, existParamsBloggerMiddleware} from './middlewares'
 import {authMiddleware, validationsErrorsMiddleware} from '../../globalMiddlewares'
 import {BloggersIL} from './bloggersIL'
 import {PostsIL} from '../../f2-posts/il/postsIL'
@@ -25,4 +25,4 @@ bloggersRouter.put(
 )
 
 bloggersRouter.get('/:id/posts', existParamsBloggerMiddleware, PostsIL.readByBloggerId)
-bloggersRouter.post('/:id/posts', existParamsBloggerMiddleware, existBodyBloggerMiddleware, PostsIL.add)
+bloggersRouter.post('/:id/posts', authMiddleware, existParamsBloggerMiddleware, PostsIL.add)

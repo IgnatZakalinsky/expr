@@ -8,7 +8,7 @@ export const logMiddleware = (req: Request, res: Response, next: NextFunction) =
     console.log('query:', req.query) // need log always
     console.log('body:', req.body) // need log always
     // console.log('cookies:', req.cookies) // need log always
-    console.log('headers:', req.headers)
+    // console.log('headers:', req.headers)
     // log('rawHeaders:', req.rawHeaders)
     next()
 }
@@ -16,8 +16,8 @@ export const logMiddleware = (req: Request, res: Response, next: NextFunction) =
 const blackIPs = ['178.127.34.230', '']
 export const blockIPsMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
-    console.log('ip: ', req.headers['x-forwarded-for'])
-    console.log('ip: ', req.ip)
+    // console.log('ip: ', req.headers['x-forwarded-for'])
+    // console.log('ip: ', req.ip)
 
     // console.log(req.headers['X-Forwarded-For'])
     // console.log(req.headers['x-client-ip'])
@@ -63,7 +63,7 @@ export const countMiddleware = (req: Request, res: Response, next: NextFunction)
 }
 
 export const checkContentTypeMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    console.log('content-type: ', req.headers['content-type'], ' is: ', req.is('application/json'))
+    // console.log('content-type: ', req.headers['content-type'], ' is: ', req.is('application/json'))
     // if (!req.is('application/json')) {
     //     res.status(400).json({error: 'Bad content type'})
     //     return
