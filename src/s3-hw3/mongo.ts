@@ -1,5 +1,6 @@
 import {MongoClient} from 'mongodb'
 import {destruct} from '../s1-common/errors'
+import {BloggerType} from './f0-types/blogger'
 
 export const MONGO_DB_URIS = 'mongodb+srv://ai73aaa:1qazxcvBG@neko0-iwojt.mongodb.net/nekobd?retryWrites=true&w=majority'
 
@@ -15,3 +16,5 @@ export const runDB = async () => {
         return false
     }
 }
+
+export const Blogger = client.db('expr').collection<BloggerType>('blogger')

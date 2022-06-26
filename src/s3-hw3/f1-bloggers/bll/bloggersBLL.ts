@@ -2,8 +2,16 @@ import {BloggersDAL} from '../dal/bloggersDAL'
 import {BloggerType} from '../../f0-types/blogger'
 
 export const BloggersBLL = {
-    read: async () => {
-        return await BloggersDAL.read()
+    read: async (SearchNameTerm: string, PageNumber: number, PageSize: number) => {
+        const items = await BloggersDAL.read(SearchNameTerm, PageNumber, PageSize)
+        const totalCount = await BloggersDAL.count(SearchNameTerm)
+        return {
+            items,
+            totalCount,
+            page: PageNumber,
+            pageSize: PageSize,
+            pageCount: Math.ceil(totalCount / PageSize)
+        }
     },
     add: async (name: string, youtubeUrl: string) => {
         return await BloggersDAL.add(name, youtubeUrl)

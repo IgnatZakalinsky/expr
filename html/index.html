@@ -12,7 +12,10 @@
 <input id="create_name" placeholder="name"/>
 <input id="create_youtubeUrl" placeholder="youtubeUrl"/>
 <hr>
-<button id="read_all_bloggers">read all bloggers</button>
+<button id="read_bloggers">read bloggers</button>
+<input id="search_name" placeholder="name"/>
+<input id="page" placeholder="page"/>
+<input id="page_size" placeholder="page size"/>
 <hr>
 <button id="find_blogger">find</button>
 <input id="find_id" placeholder="id"/>
@@ -30,15 +33,18 @@
 <div id="result"></div>
 
 <script>
-    read_all_bloggers.onclick = () => {
-        fetch('http://localhost:5000/bloggers')
+    read_bloggers.onclick = () => {
+        fetch('http://localhost:5000/bloggers?SearchNameTerm=' + search_name.value
+            + '&PageNumber=' + page.value
+            + '&PageSize=' + page_size.value
+        )
             .then(res => res.json())
-            .then(data => result.innerHTML = JSON.stringify(data))
+            .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
     }
     find_blogger.onclick = () => {
         fetch('http://localhost:5000/bloggers/' + find_id.value)
             .then(res => res.json())
-            .then(data => result.innerHTML = JSON.stringify(data))
+            .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
     }
     create_blogger.onclick = () => {
         fetch('http://localhost:5000/bloggers', {
@@ -50,7 +56,7 @@
             },
         })
             .then(res => res.json())
-            .then(data => result.innerHTML = JSON.stringify(data))
+            .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
     }
     delete_blogger.onclick = () => {
         fetch('http://localhost:5000/bloggers/' + delete_id.value, {
@@ -60,6 +66,8 @@
                 authorization: 'Basic YWRtaW46cXdlcnR5'
             },
         })
+            .then(res => res.json())
+            .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
     }
     update_blogger.onclick = () => {
         fetch('http://localhost:5000/bloggers/' + update_id.value, {
@@ -75,7 +83,7 @@
             },
         })
             .then(res => res.json())
-            .then(data => result.innerHTML = JSON.stringify(data))
+            .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
     }
 </script>
 </body>

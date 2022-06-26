@@ -4,8 +4,9 @@ import {BloggerType} from '../../f0-types/blogger'
 
 export const BloggersIL = {
     read: async (req: Request, res: Response) => {
-        const bloggers: BloggerType[] = await BloggersBLL.read()
-        res.status(200).json(bloggers)
+        const {SearchNameTerm, PageNumber, PageSize} = req.query
+        const answer = await BloggersBLL.read(SearchNameTerm + '', +(PageNumber || 1), +(PageSize || 10))
+        res.status(200).json(answer)
     },
     add: async (req: Request, res: Response) => {
         const newBlogger: BloggerType = await BloggersBLL.add(req.body.name, req.body.youtubeUrl)
