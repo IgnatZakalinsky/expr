@@ -5,10 +5,11 @@ import {body, validationResult} from 'express-validator'
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     // if (req.headers.Authorization !== 'Basic <Base64 encoded admin:qwerty>') {
-    if (req.headers.Authorization !== 'Basic YWRtaW46cXdlcnR5') {
-        res.status(401).json({})
-        return
-    }
+    console.log('Authorization: ', req.headers.Authorization)
+    // if (req.headers.Authorization !== 'Basic YWRtaW46cXdlcnR5') { // "Basic YWRtaW46cXdlcnR5"
+    //     res.status(401).json({})
+    //     return
+    // }
 
     next()
 }
