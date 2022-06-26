@@ -8,55 +8,70 @@
 <h1>Front-end</h1>
 
 
-<button id="create_video">create</button>
-<input id="create_title" placeholder="новое название"/>
+<button id="create_blogger">create</button>
+<input id="create_name" placeholder="name"/>
+<input id="create_youtubeUrl" placeholder="youtubeUrl"/>
 <hr>
-<button id="read_all_videos">read all vieos</button>
+<button id="read_all_bloggers">read all bloggers</button>
 <hr>
-<button id="read_single_video">read video by id</button>
-<input id="read_id" placeholder="videoId"/>
+<button id="find_blogger">find</button>
+<input id="find_id" placeholder="id"/>
 <hr>
-<button id="update_video">update</button>
-<input id="update_id" placeholder="videoId"/><input id="update_title" placeholder="новое название"/>
+<button id="update_blogger">update</button>
+<input id="update_id" placeholder="id"/>
+<input id="update_name" placeholder="name"/>
+<input id="update_youtubeUrl" placeholder="youtubeUrl"/>
 <hr>
-<button id="delete_video">delete</button>
-<input id="delete_id" placeholder="videoId"/>
+<button id="delete_blogger">delete</button>
+<input id="delete_id" placeholder="id"/>
 <hr>
 
 
 <div id="result"></div>
 
 <script>
-    read_all_videos.onclick = () => {
-        fetch('http://localhost:5000/videos')
+    read_all_bloggers.onclick = () => {
+        fetch('http://localhost:5000/bloggers')
             .then(res => res.json())
             .then(data => result.innerHTML = JSON.stringify(data))
     }
-    read_single_video.onclick = () => {
-        fetch('http://localhost:5000/videos/' + read_id.value)
+    find_blogger.onclick = () => {
+        fetch('http://localhost:5000/bloggers/' + find_id.value)
             .then(res => res.json())
             .then(data => result.innerHTML = JSON.stringify(data))
     }
-    create_video.onclick = () => {
-        fetch('http://localhost:5000/videos', {
+    create_blogger.onclick = () => {
+        fetch('http://localhost:5000/bloggers', {
             method: 'POST',
-            body: JSON.stringify({title: create_title.value}),
+            body: JSON.stringify({name: create_name.value, youtubeUrl: create_youtubeUrl.value}),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                authorization: 'Basic YWRtaW46cXdlcnR5'
             },
         })
             .then(res => res.json())
             .then(data => result.innerHTML = JSON.stringify(data))
     }
-    delete_video.onclick = () => {
-        fetch('http://localhost:5000/videos/' + delete_id.value, {method: 'DELETE'})
-    }
-    update_video.onclick = () => {
-        fetch('http://localhost:5000/videos/' + update_id.value, {
-            method: 'PUT',
-            body: JSON.stringify({title: update_title.value}),
+    delete_blogger.onclick = () => {
+        fetch('http://localhost:5000/bloggers/' + delete_id.value, {
+            method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                authorization: 'Basic YWRtaW46cXdlcnR5'
+            },
+        })
+    }
+    update_blogger.onclick = () => {
+        fetch('http://localhost:5000/bloggers/' + update_id.value, {
+            method: 'PUT',
+            body: JSON.stringify({
+                id: update_id.value,
+                name: update_name.value,
+                youtubeUrl: update_youtubeUrl.value,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: 'Basic YWRtaW46cXdlcnR5'
             },
         })
             .then(res => res.json())
