@@ -10,7 +10,7 @@ export const PostsIL = {
     },
     readByBloggerId: async (req: Request, res: Response) => {
         const {PageNumber, PageSize} = req.query
-        const answer = await PostsBLL.read(+(PageNumber || 1), +(PageSize || 10), +req.body.bl.id)
+        const answer = await PostsBLL.read(+(PageNumber || 1), +(PageSize || 10), req.body.bl.id)
         res.status(200).json(answer)
     },
 
@@ -25,7 +25,7 @@ export const PostsIL = {
         res.status(201).json(newPost)
     },
     getById: async (req: Request, res: Response) => {
-        const p: PostType | null = await PostsBLL.getById(+req.params.id)
+        const p: PostType | null = await PostsBLL.getById(req.params.id)
         if (!p) {
             res.status(404).json({})
             return
@@ -33,7 +33,7 @@ export const PostsIL = {
         res.status(200).json(p)
     },
     del: async (req: Request, res: Response) => {
-        const p: boolean = await PostsBLL.del(+req.params.id)
+        const p: boolean = await PostsBLL.del(req.params.id)
         if (!p) {
             res.status(404).json({})
             return
@@ -42,11 +42,11 @@ export const PostsIL = {
     },
     update: async (req: Request, res: Response) => {
         const b: boolean = await PostsBLL.update({
-            id: +req.params.id,
+            id: req.params.id,
             title: req.body.title,
             shortDescription: req.body.shortDescription,
             content: req.body.content,
-            bloggerId: +req.body.bl.id,
+            bloggerId: req.body.bl.id,
             bloggerName: req.body.bl.name
         })
         if (!b) {

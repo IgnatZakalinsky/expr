@@ -3,7 +3,7 @@ import {PostType} from '../../f0-types/post'
 import {BloggerType} from '../../f0-types/blogger'
 
 export const PostsBLL = {
-    read: async (PageNumber: number, PageSize: number, blId?: number) => {
+    read: async (PageNumber: number, PageSize: number, blId?: string) => {
         const items = await PostsDAL.read(PageNumber, PageSize, blId)
         const totalCount = await PostsDAL.count(blId)
         return {
@@ -21,10 +21,10 @@ export const PostsBLL = {
             bloggerName: blogger.name,
         })
     },
-    getById: async (id: number) => {
+    getById: async (id: string) => {
         return await PostsDAL.getById(id)
     },
-    del: async (id: number) => {
+    del: async (id: string) => {
         const p: PostType | null = await PostsDAL.getById(id)
         if (!p) {
             return false

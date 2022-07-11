@@ -13,7 +13,7 @@ export const BloggersIL = {
         res.status(201).json(newBlogger)
     },
     getById: async (req: Request, res: Response) => {
-        const b: BloggerType | null = await BloggersBLL.getById(+req.params.id)
+        const b: BloggerType | null = await BloggersBLL.getById(req.params.id)
         if (!b) {
             res.status(404).json({})
             return
@@ -21,7 +21,7 @@ export const BloggersIL = {
         res.status(200).json(b)
     },
     del: async (req: Request, res: Response) => {
-        const b: boolean = await BloggersBLL.del(+req.params.id)
+        const b: boolean = await BloggersBLL.del(req.params.id)
         if (!b) {
             res.status(404).json({})
             return
@@ -29,7 +29,7 @@ export const BloggersIL = {
         res.status(204).json({})
     },
     update: async (req: Request, res: Response) => {
-        const b: boolean = await BloggersBLL.update({id: +req.params.id, name: req.body.name, youtubeUrl: req.body.youtubeUrl})
+        const b: boolean = await BloggersBLL.update({id: req.params.id, name: req.body.name, youtubeUrl: req.body.youtubeUrl})
         if (!b) {
             res.status(404).json({})
             return

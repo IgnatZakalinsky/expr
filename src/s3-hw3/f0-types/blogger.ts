@@ -1,5 +1,5 @@
 export type BloggerType = {
-    id: number
+    id: string
     name: string
     youtubeUrl: string
 }

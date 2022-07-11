@@ -9,7 +9,7 @@ export const bloggerValidationsMiddleware = [
 ]
 
 export const existBodyBloggerMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-    const bl = await BloggersDAL.getById(+req.body.bloggerId)
+    const bl = await BloggersDAL.getById(req.body.bloggerId)
     if (!bl) {
         res.status(400).json({
             errorsMessages: [{message: 'blogger not exist', field: 'bloggerId'}],
@@ -23,7 +23,7 @@ export const existBodyBloggerMiddleware = async (req: Request, res: Response, ne
 }
 
 export const existParamsBloggerMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-    const bl = await BloggersDAL.getById(+req.params.id)
+    const bl = await BloggersDAL.getById(req.params.id)
     if (!bl) {
         res.status(404).json({
             errorsMessages: [{message: 'blogger not exist', field: 'bloggerId'}],

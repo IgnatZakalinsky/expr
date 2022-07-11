@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import {UsersDAL} from '../dal/usersDAL'
-import {UserType} from "../../f0-types/user";
+import {UserType} from '../../f0-types/user'
 
 export const UsersBLL = {
     add: async (login: string, password: string) => {

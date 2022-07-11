@@ -13,17 +13,17 @@ export const BloggersDAL = {
     },
     add: async (name: string, youtubeUrl: string) => {
         const newBlogger: BloggerType = {
-            id: Date.now(),
+            id: Date.now() + '',
             name: name,
             youtubeUrl: youtubeUrl,
         }
         await Blogger.insertOne({...newBlogger})
         return newBlogger
     },
-    getById: async (id: number) => {
+    getById: async (id: string) => {
         return await Blogger.findOne({id}, {projection: {_id: 0}})
     },
-    del: async (id: number) => {
+    del: async (id: string) => {
         return await Blogger.deleteOne({id})
     },
     update: async (b: BloggerType) => {

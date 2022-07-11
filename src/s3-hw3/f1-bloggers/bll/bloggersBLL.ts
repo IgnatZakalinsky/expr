@@ -16,10 +16,10 @@ export const BloggersBLL = {
     add: async (name: string, youtubeUrl: string) => {
         return await BloggersDAL.add(name, youtubeUrl)
     },
-    getById: async (id: number) => {
+    getById: async (id: string) => {
         return await BloggersDAL.getById(id)
     },
-    del: async (id: number) => {
+    del: async (id: string) => {
         const b: BloggerType | null = await BloggersBLL.getById(id)
         if (!b) {
             return false
