@@ -42,3 +42,16 @@
 25) const port = process.env.PORT || 5000
 
 26) yarn add express-validator
+
+27) yarn add jest @types/jest ts-jest mongodb-memory-server --dev
+28) src/jest.config.js:
+module.exports = {
+    preset: 'ts-jest',
+    testEnvironment: 'node'
+}
+29) package.json:
+"scripts": {
+    ...,
+    "test": "jest --config src/jest.config.js",
+    "test-w": "jest --config src/jest.config.js --watch"
+}
