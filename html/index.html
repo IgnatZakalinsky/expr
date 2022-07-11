@@ -66,6 +66,13 @@ params: <input type="checkbox" id="create_blogger_params"/>
 <button id="sign_in">sign in</button>
 <input id="auth_login" placeholder="login"/>
 <input id="auth_pass" placeholder="password"/>
+<hr>
+<button id="read_users">read users</button>
+<input id="users_page" placeholder="page"/>
+<input id="users_page_size" placeholder="page size"/>
+<hr>
+<button id="delete_user">delete</button>
+<input id="delete_user_id" placeholder="id"/>
 
 <div id="result"></div>
 
@@ -237,6 +244,25 @@ params: <input type="checkbox" id="create_blogger_params"/>
             }),
             headers: {
                 'Content-Type': 'application/json'
+            },
+        })
+            .then(res => res.json())
+            .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
+    }
+    read_users.onclick = () => {
+        fetch('http://localhost:5000/users'
+            + '?PageNumber=' + users_page.value
+            + '&PageSize=' + users_page_size.value
+        )
+            .then(res => res.json())
+            .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
+    }
+    delete_user.onclick = () => {
+        fetch('http://localhost:5000/users/' + delete_user_id.value, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: 'Basic YWRtaW46cXdlcnR5'
             },
         })
             .then(res => res.json())

@@ -6,3 +6,5 @@ import {authMiddleware, validationsErrorsMiddleware} from '../../../s3-hw3/globa
 export const usersRouter = Router()
 
 usersRouter.post('/', authMiddleware, loginValidationsMiddleware, validationsErrorsMiddleware, UsersIL.add)
+usersRouter.get('/', UsersIL.read)
+usersRouter.delete('/:id', authMiddleware, UsersIL.del)
