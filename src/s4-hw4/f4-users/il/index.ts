@@ -7,4 +7,4 @@ export const usersRouter = Router()
 
 usersRouter.post('/', authMiddleware, loginValidationsMiddleware, validationsErrorsMiddleware, UsersIL.add)
 usersRouter.get('/', UsersIL.read)
-usersRouter.delete('/:id', authMiddleware, UsersIL.del)
+usersRouter.delete('/:id?', authMiddleware, UsersIL.del)
