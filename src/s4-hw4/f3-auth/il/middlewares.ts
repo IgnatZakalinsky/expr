@@ -21,6 +21,6 @@ export const userAuthMiddleware = async (req: Request, res: Response, next: Next
         return
     }
 
-    req.body.user = await UsersDAL.getById(userId + '')
+    req.user = await UsersDAL.getById(userId + '')
     next()
 }

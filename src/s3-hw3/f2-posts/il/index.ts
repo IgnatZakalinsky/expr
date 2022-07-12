@@ -3,6 +3,8 @@ import {authMiddleware, validationsErrorsMiddleware} from '../../globalMiddlewar
 import {postValidationsMiddleware} from './middlewares'
 import {existBodyBloggerMiddleware} from '../../f1-bloggers/il/middlewares'
 import {PostsIL} from './postsIL'
+import {userAuthMiddleware} from "../../../s4-hw4/f3-auth/il/middlewares";
+import {CommentsIL} from "../../../s4-hw4/f5-comments/il/commentsIL";
 
 export const postsRouter = Router()
 
@@ -25,3 +27,6 @@ postsRouter.put(
     validationsErrorsMiddleware,
     PostsIL.update
 )
+
+postsRouter.post('/:id/comments', userAuthMiddleware, CommentsIL.add)
+postsRouter.get('/:id/comments', CommentsIL.read)
