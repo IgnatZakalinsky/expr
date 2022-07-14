@@ -27,6 +27,7 @@ export const UsersBLL = {
     },
     del: async (id: string) => {
         const u: UserType | null = await UsersDAL.getById(id)
+        console.log({u})
         if (!u) {
             return false
         }
