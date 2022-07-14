@@ -6,6 +6,9 @@ import {PostsDAL} from '../../../s3-hw3/f2-posts/dal/postsDAL'
 
 export const CommentsBLL = {
     add: async (content: string, user: WithId<UserType>, postId: string) => {
+        const post = await PostsDAL.getById(postId)
+        if (!post) return false
+
         const newComment: CommentType = {
             content,
             addedAt: new Date().toUTCString(),

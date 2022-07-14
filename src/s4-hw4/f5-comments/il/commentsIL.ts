@@ -4,7 +4,11 @@ import {CommentsBLL} from '../bll/commentsBLL'
 export const CommentsIL = {
     add: async (req: Request, res: Response) => {
         const {content} = req.body
-        const comment = await CommentsBLL.add(content, req.user!, req.params.id)
+        const comment = await CommentsBLL.add(content, req.user, req.params.id)
+        if (!comment) {
+            res.status(404).json({})
+            return
+        }
 
         const {_id, postId, ...rest} = comment || {}
         res.status(201).json({...rest, id: _id})
