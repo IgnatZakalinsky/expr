@@ -29,5 +29,11 @@ postsRouter.put(
     PostsIL.update
 )
 
-postsRouter.post('/:id/comments', userAuthMiddleware, commentValidationsMiddleware, CommentsIL.add)
+postsRouter.post(
+    '/:id/comments',
+    userAuthMiddleware,
+    commentValidationsMiddleware,
+    validationsErrorsMiddleware,
+    CommentsIL.add
+)
 postsRouter.get('/:id/comments', CommentsIL.read)

@@ -9,13 +9,10 @@ const secret = '123'
 export const AuthBLL = {
     login: async (login: string, password: string) => {
         const user = await UsersDAL.getByLogin(login)
-        console.log(user)
         if (!user) return ''
-        console.log(1)
 
         const passHash = await UsersBLL._genHash(password, user.passSalt)
         if (passHash !== user.passHash) return ''
-        console.log(2)
 
         return AuthBLL._createJWT(user)
     },

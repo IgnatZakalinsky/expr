@@ -5,7 +5,6 @@ export const AuthIL = {
     login: async (req: Request, res: Response) => {
         const {login, password} = req.body
         const token = await AuthBLL.login(login, password)
-        console.log(token)
 
         if (!token) {
             res.status(401).json({})

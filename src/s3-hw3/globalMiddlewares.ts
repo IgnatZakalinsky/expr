@@ -91,3 +91,12 @@ export const validationsErrorsMiddleware = (req: Request, res: Response, next: N
 
     next()
 }
+export const validationsLoginErrorsMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        res.status(401).json({})
+        return
+    }
+
+    next()
+}
