@@ -26,11 +26,15 @@ export const UsersBLL = {
         }
     },
     del: async (id: string) => {
-        const u: UserType | null = await UsersDAL.getById(id)
-        console.log({u})
-        if (!u) {
+        try {
+            const u: UserType | null = await UsersDAL.getById(id)
+            if (!u) {
+                return false
+            }
+        } catch (e) {
             return false
         }
+
         await UsersDAL.del(id)
         return true
     },

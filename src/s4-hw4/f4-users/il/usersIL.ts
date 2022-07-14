@@ -14,9 +14,7 @@ export const UsersIL = {
         res.status(200).json(answer)
     },
     del: async (req: Request, res: Response) => {
-        console.log({id: req.params.id})
         const u: boolean = await UsersBLL.del(req.params.id)
-        console.log('success')
         if (!u) {
             res.status(404).json({})
             return
