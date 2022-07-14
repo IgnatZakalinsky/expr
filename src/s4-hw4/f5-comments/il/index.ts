@@ -1,9 +1,9 @@
 import {Router} from 'express'
-import {loginValidationsMiddleware} from '../../f3-auth/il/middlewares'
-import {authMiddleware, validationsErrorsMiddleware} from '../../../s3-hw3/globalMiddlewares'
+import {CommentsIL} from './commentsIL'
+import {userAuthMiddleware} from '../../f3-auth/il/middlewares'
 
 export const commentsRouter = Router()
 
-// commentsRouter.put('/:id', authMiddleware, loginValidationsMiddleware, validationsErrorsMiddleware, UsersIL.add)
-// usersRouter.get('/', UsersIL.read)
-// usersRouter.delete('/:id?', authMiddleware, UsersIL.del)
+commentsRouter.get('/:id', CommentsIL.getById)
+commentsRouter.put('/:id', userAuthMiddleware, CommentsIL.update)
+commentsRouter.delete('/:id', userAuthMiddleware, CommentsIL.del)

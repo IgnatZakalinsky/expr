@@ -28,4 +28,35 @@ export const CommentsBLL = {
             pagesCount: Math.ceil(totalCount / PageSize)
         }
     },
+    getById: async (id: string) => {
+        try {
+            return await CommentsDAL.getById(id)
+        } catch (e) {
+            return false
+        }
+    },
+    update: async (id: string, content: string, user: WithId<UserType>) => {
+        try {
+            const comment = await CommentsDAL.getById(id)
+            if (!comment) return null
+            if (comment.userId + '' !== user._id + '') return false
+
+            await CommentsDAL.update(id, {...comment, content})
+            return true
+        } catch (e) {
+            return null
+        }
+    },
+    del: async (id: string, user: WithId<UserType>) => {
+        try {
+            const comment = await CommentsDAL.getById(id)
+            if (!comment) return null
+            if (comment.userId + '' !== user._id + '') return false
+
+            await CommentsDAL.del(id)
+            return true
+        } catch (e) {
+            return null
+        }
+    }
 }

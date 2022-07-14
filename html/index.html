@@ -82,7 +82,14 @@ params: <input type="checkbox" id="create_blogger_params"/>
 <hr>
 <button id="read_comments">read comments</button>
 <input id="read_comment_post_id" placeholder="post id"/>
-
+<hr>
+<button id="read_comment">read comment</button>
+<input id="read_comment_id" placeholder="comment id"/>
+<hr>
+<button id="update_comment">update comment</button>
+<hr>
+<button id="delete_comment">delete comment</button>
+<hr>
 
 <div id="result"></div>
 
@@ -302,6 +309,39 @@ params: <input type="checkbox" id="create_blogger_params"/>
             + read_comment_post_id.value
             + '/comments'
         )
+            .then(res => res.json())
+            .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
+    }
+    read_comment.onclick = () => {
+        fetch('http://localhost:5000/comments/'
+            + read_comment_id.value
+        )
+            .then(res => res.json())
+            .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
+    }
+    update_comment.onclick = () => {
+        fetch('http://localhost:5000/comments/' + read_comment_id.value, {
+            method: 'PUT',
+            body: JSON.stringify({
+                content: comment_content.value,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: 'Bearer ' + auth.token
+            },
+        })
+            .then(res => res.json())
+            .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
+    }
+    delete_comment.onclick = () => {
+        fetch('http://localhost:5000/comments/' + read_comment_id.value, {
+            method: 'DELETE',
+            body: JSON.stringify({}),
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: 'Bearer ' + auth.token
+            },
+        })
             .then(res => res.json())
             .then(data => result.innerHTML = JSON.stringify(data) || 'ok')
     }

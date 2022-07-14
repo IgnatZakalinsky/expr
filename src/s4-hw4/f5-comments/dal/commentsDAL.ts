@@ -22,4 +22,7 @@ export const CommentsDAL = {
     del: async (_id: string) => {
         return await Comment.deleteOne({_id: new ObjectId(_id)})
     },
+    update: async (id: string, comment: CommentType) => {
+        return await Comment.replaceOne({_id: new ObjectId(id)}, comment)
+    }
 }

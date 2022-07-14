@@ -4,6 +4,7 @@ import {blockIPsMiddleware, checkContentTypeMiddleware, countMiddleware, logMidd
 import {postsRouter} from './f2-posts/il'
 import {authRouter} from '../s4-hw4/f3-auth/il'
 import {usersRouter} from '../s4-hw4/f4-users/il'
+import {commentsRouter} from "../s4-hw4/f5-comments/il";
 
 export const hw3 = async (app: Express) => {
     app.use(logMiddleware)
@@ -15,6 +16,7 @@ export const hw3 = async (app: Express) => {
     app.use('/posts', postsRouter)
     app.use('/auth', authRouter)
     app.use('/users', usersRouter)
+    app.use('/comments', commentsRouter)
 
     // default
     app.use((req: Request, res: Response) => {
