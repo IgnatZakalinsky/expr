@@ -2,6 +2,7 @@ import {UserType} from '../../f0-types/user'
 import {WithId} from 'mongodb'
 import {CommentType} from '../../f0-types/comment'
 import {CommentsDAL} from '../dal/commentsDAL'
+import {PostsDAL} from '../../../s3-hw3/f2-posts/dal/postsDAL'
 
 export const CommentsBLL = {
     add: async (content: string, user: WithId<UserType>, postId: string) => {
@@ -14,7 +15,10 @@ export const CommentsBLL = {
         }
         return await CommentsDAL.create(newComment)
     },
-    read: async (PageNumber: number, PageSize: number, postId?: string) => {
+    read: async (PageNumber: number, PageSize: number, postId: string) => {
+        const post = await PostsDAL.getById(postId)
+        if (!post) return false
+
         const items = await CommentsDAL.read(PageNumber, PageSize, postId)
         const totalCount = await CommentsDAL.count(postId)
         return {

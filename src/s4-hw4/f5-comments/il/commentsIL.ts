@@ -12,6 +12,11 @@ export const CommentsIL = {
     read: async (req: Request, res: Response) => {
         const {PageNumber, PageSize} = req.query
         const answer = await CommentsBLL.read(+(PageNumber || 1), +(PageSize || 10), req.params.id)
+        if (!answer) {
+            res.status(404).json({})
+            return
+        }
+
         res.status(200).json(answer)
     },
     getById: async (req: Request, res: Response) => {
@@ -20,7 +25,8 @@ export const CommentsIL = {
             res.status(404).json({})
             return
         }
-        res.status(200).json(comment)
+        const {_id, postId, ...rest} = comment
+        res.status(200).json({...rest, id: _id})
     },
     update: async (req: Request, res: Response) => {
         const answer = await CommentsBLL.update(
