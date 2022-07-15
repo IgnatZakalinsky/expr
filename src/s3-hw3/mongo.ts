@@ -4,10 +4,9 @@ import {BloggerType} from './f0-types/blogger'
 import {PostType} from './f0-types/post'
 import {UserType} from '../s4-hw4/f0-types/user'
 import {CommentType} from '../s4-hw4/f0-types/comment'
+import {SETTINGS} from './f2-posts/config'
 
-export const MONGO_DB_URIS = 'mongodb+srv://ai73aaa:1qazxcvBG@neko0-iwojt.mongodb.net/nekobd?retryWrites=true&w=majority'
-
-export const client = new MongoClient(MONGO_DB_URIS)
+export const client = new MongoClient(SETTINGS.MONGO_DB_URIS)
 
 export const runDB = async () => {
     try {

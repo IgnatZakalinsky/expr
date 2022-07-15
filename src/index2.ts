@@ -4,9 +4,10 @@ import bodyParser from 'body-parser'
 import {globalCatch} from './s1-common/errors'
 import {runDB} from './s3-hw3/mongo'
 import {hw3} from './s3-hw3/hw3'
+import {SETTINGS} from './s3-hw3/f2-posts/config'
 
 const app = express()
-const port = process.env.PORT || 5000
+const port = SETTINGS.PORT
 
 app.use(cors())
 // parse application/x-www-form-urlencoded

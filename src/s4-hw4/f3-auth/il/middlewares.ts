@@ -7,6 +7,9 @@ export const loginValidationsMiddleware = [
     body('login').trim().isLength({min: 3, max: 10}),
     body('password').trim().isLength({min: 6, max: 20}),
 ]
+export const emailValidationsMiddleware = [
+    body('email').trim().isEmail(),
+]
 
 export const userAuthMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     if (!req.headers.authorization) {
